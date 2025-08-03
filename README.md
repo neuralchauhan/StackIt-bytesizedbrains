@@ -1,4 +1,4 @@
-#StackIt
+#StackIt- A minimal Q/A platform
 
 
 Name : Sankalp Chauhan || Email : sankalp.chauhan13@gmail.com <br/> <br/>
