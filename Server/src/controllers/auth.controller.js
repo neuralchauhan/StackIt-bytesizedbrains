@@ -53,14 +53,13 @@ export const signup = asyncHandler ( async (req, res) => {
 
     const accessToken = await generateAccessToken(newUser._id);
 
-
     return res
             .status(200)
             .cookie("accessToken", accessToken, options)
-            .json(new ApiResponse(200, "User registered successfully"));
+            .json(new ApiResponse(200, "User registered successfully", newUser));
 
   } catch (error) {
-    throw new ApiError(500, error.message)
+    throw new ApiError(500, error)
   }
 })
 
@@ -89,7 +88,7 @@ export const signin = asyncHandler (async (req, res) => {
    return res
             .status(200)
             .cookie("accessToken", accessToken, options)
-            .json( new ApiResponse(200, "User logged in successfully"))
+            .json( new ApiResponse(200, "User logged in successfully", existingUser))
   } catch (error) {
     throw new ApiError(500, error.message)
   }

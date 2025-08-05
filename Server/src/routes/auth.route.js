@@ -14,7 +14,7 @@ router
 
 router  
   .route("/signout")
-  .post(verifyJWT, signout)
+  .get(verifyJWT, signout)
 
 export default router;
 
