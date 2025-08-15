@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  const authUser = localStorage.getItem("loggedInUser");
+
   return (
     <div>
         <div className="navbar h-18 w-full flex items-center justify-between bg-transparent shadow px-10">
           <Link to={"/"}>
           <div className="logo-container flex justify-center items-center">
-            <img src="favicon.png" className="h-8" />
+            <img src="/favicon.png" className="h-8" />
             <p className="font-semibold text-slate-800 text-lg">StackIt</p>
           </div>
           </Link>
@@ -22,17 +24,27 @@ function Navbar() {
           </div>
 
           <div className="flex gap-2.5">
-            <button className=" w-20 rounded-md border-1 bg-blue-400 text-white hover:bg-blue-600">
+            { !authUser ? 
+              <div className='flex gap-3'>
+             <button className=" w-20 h-8 rounded-md border-1 bg-blue-400 text-white hover:bg-blue-600">
               <Link to="/signin"> SignIn</Link>
             </button>
             <button className="w-20 h-8 rounded-md border-1 bg-gray-800 text-white hover:bg-gray-600">
               <Link to="/signup"> SignUp</Link>
             </button>
-            <form>
+            </div>
+            : 
+            <div className='flex gap-3'>
+            <button className="w-20 h-8 rounded-md border-1 bg-gray-800 text-white hover:bg-gray-600">
+              <Link to="/ask">Ask</Link>
+            </button>
+            <form onSubmit={() => localStorage.clear()}>
               <button className="w-20 h-8 rounded-md border-1 bg-blue-400 text-white hover:bg-blue-600">
                 Logout
               </button>
             </form>
+            </div>
+            }
           </div>
         </div>
     </div>

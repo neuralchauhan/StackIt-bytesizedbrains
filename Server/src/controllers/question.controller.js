@@ -64,7 +64,6 @@ export const createQuestion = asyncHandler( async(req, res ) => {
 export const upvoteQuestion = asyncHandler( async( req, res ) => {
   
   try {
-    // const q_id = new mongoose.Types.ObjectId()
     const question = await Question.findById(req.params?.id)
     if(!question) { 
       throw new ApiError(400, "Question not found")
@@ -72,10 +71,7 @@ export const upvoteQuestion = asyncHandler( async( req, res ) => {
   
     const userId = await req.user?.id;
   
-    if(question.upvotes?.includes(userId)){
-      question.upvotes?.pull(userId)
-    }
-    else{
+    if(!question.upvotes?.includes(userId)){
       question.upvotes?.push(userId)
     }
   
@@ -89,14 +85,38 @@ export const upvoteQuestion = asyncHandler( async( req, res ) => {
   }
 })
 
+export const downVoteQuestion = asyncHandler( async( req, res ) => {
+  
+  try {
+    const question = await Question.findById(req.params?.id)
+    if(!question) { 
+      throw new ApiError(400, "Question not found")
+    }
+  
+    const userId = await req.user?.id;
+  
+    if(question.upvotes?.includes(userId)){
+      question.upvotes?.pull(userId);
+    }
+  
+    await question.save()
+  
+    return res
+            .status(200)
+            .json(new ApiResponse(200, "downvoted successfully", {}))
+  } catch (error) {
+      throw new ApiError(500, error.message)
+  }
+})
+
 export const getQuestion = asyncHandler( async(req, res) => {
  try {
-   const id =new mongoose.Types.ObjectId(req.params);
+   const { id }  = req.params;
    if(!id) {
     throw new ApiError(404, "Question id not found")
    }
 
-   const question = await Question.findById(id);
+   const question = await Question.findById(id).populate("author", "username");
 
    if(!question){
     throw new ApiError(404, "Question not found")

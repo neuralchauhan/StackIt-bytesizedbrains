@@ -42,7 +42,7 @@ export default function SignIn() {
           withCredentials: true,
         }
       );
-      console.log(response);
+      localStorage.setItem("loggedInUser", JSON.stringify(response.data.data));
 
       toast.success("Signed In successfully", {
         position: "top-right",

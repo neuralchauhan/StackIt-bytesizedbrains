@@ -62,7 +62,7 @@ function SignUp() {
           withCredentials: true,
         })
 
-        console.log(response);
+        localStorage.setItem("loggedInUser", JSON.stringify(response.data.data));
 
         toast.success("Signed Up successfully", {
         position: "top-right",

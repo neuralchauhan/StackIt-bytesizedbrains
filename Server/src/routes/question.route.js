@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 
 import { verifyJWT } from "../middlewares/auth.middleware.js"
-import { getAllQuestions, createQuestion, upvoteQuestion, getQuestion } from "../controllers/question.controller.js";
+import { getAllQuestions, createQuestion, upvoteQuestion, getQuestion, downVoteQuestion } from "../controllers/question.controller.js";
 
 router
   .route("/get-all-questions")
@@ -15,6 +15,10 @@ router
 router
   .route("/:id/upvote")
   .put(verifyJWT, upvoteQuestion )
+
+router
+  .route("/:id/downvote")
+  .put(verifyJWT, downVoteQuestion )
 
 router
   .route("/:id")

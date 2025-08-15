@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from "react";
+import Editor from "../components/Editor.jsx";
 
 function AskQuestion() {
+
   return (
     <div>
-      AskQuestion
+      <Editor />
     </div>
-  )
+  );
 }
 
-export default AskQuestion
+export default AskQuestion;
